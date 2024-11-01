@@ -1,50 +1,47 @@
 
-from pytube import YouTube
-from pytube import Playlist
-import pytube.exceptions
+from pytubefix import YouTube
+from pytubefix import Playlist
+from pytubefix.exceptions import VideoUnavailable
+from pytubefix.cli import on_progress, display_progress_bar
 
-#Successfully uninstalled pytube-10.9.3
-#kiem tra version truoc khi chay chTrinh
+# pip install pytubefix
 
-while True :
-    
-    trang = input('Download 1 video: ')
-    if trang == '': break
-
+def taiVideos(duongdan):
     try:
-        yt = YouTube(trang)
-        #can xem lai filter neu muon video
-        yt.streams.filter(only_audio=True).first().download('C:\\Users\\hibis\\Downloads\\taiTube')
-
-        #yt.streams.filter(only_audio=True).first().download('C:\\Users\\hibis\\Downloads\\taiTube')
-        #yt.streams.filter(resolution='720p').first().download('C:\\Users\\hibis\\Downloads\\taiTube')
-        print("--Xong--") 
-    
-    except pytube.exceptions.ExtractError as e:
+        yt = YouTube(duongdan, on_progress_callback = on_progress, on_complete_callback= display_progress_bar)
+    except VideoUnavailable as e:
         print(e)
-        print(f'link nay:-- {trang} -- khong dung dia chi')
-  
+        print('Video khong the down')
+    else:
+        # yt.streams.get_audio_only()
+        yt = yt.streams.get_highest_resolution()
+        print(f"Download...{yt.title} ")
+        yt.download('C:\\Users\\hibis\\Downloads\\nhac')
+        # yt.download(mp3=True)
+        print(f"--{yt.title} --> Xong!")
+    
+    
 
 
+def taiList():
+    duongdan = input("Link List : ")
+    if duongdan == "":
+        return
+    ds = Playlist(duongdan)
+    for video in ds.videos:
+        taiVideos(video)
+                
 
 
+def layLink():
+    while True:
+        trang = input('Link video: ')
+        if trang == '': break
+        elif trang == 'l':
+            taiList()
+        else:
+            taiVideos(duongdan=trang)
 
-'''
 
-
-#tai danh sach
-dSach = input("Playlist: ")
-
-try:
-    danhsach = Playlist(dSach)
-    print(f"Danh sach nay co {danhsach.length} video")
-except:
-    print("Khong tim thay danh sach nao")
-
-else:
-    for clip in danhsach.videos:
-        clip.streams.filter(res="720").first().download('D:\TaiVe')
-    print('--Xong--')
-
-'''
-
+if __name__ == "__main__":
+    layLink()

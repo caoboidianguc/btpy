@@ -4,7 +4,7 @@ import json
 
 
 
-listCoin = ["Dogecoin", "Cardano", "Stellar", "Bitcoin Cash", "Litecoin", "Ethereum Classic"]
+listCoin = ["Pi","Dogecoin", "Cardano", "Stellar", "Bitcoin Cash", "Litecoin", "Ethereum Classic"]
 
 
 def xulyThongTin(tinTraVe, tenCoin):
@@ -20,8 +20,9 @@ def xulyThongTin(tinTraVe, tenCoin):
                   print(tenCoin)
                   print(f"Xếp hạng {marketCap} - tổng tiền vào coin.")
                   print(f"Giá : {giaCoin} USD")
-                  print("-------+------------+------------")
+                  print("\n-------+------------+------------\n")
                   print()
+            
             
             
 
@@ -36,7 +37,7 @@ def yeuCauData() :
 
       headers['Accepts'] = 'application/json'
       headers['Accept-Encodeing'] = 'deflare, gzip'
-      headers['X-CMC_PRO_API_KEY'] = '6b9982e2-c01f-48c6-b6c7-fe9c4c4af28d'
+      headers['X-CMC_PRO_API_KEY'] = '9d9244f8-83f4-4e8c-83b3-8c51540bbdaa'
       session = Session()
       session.headers.update(headers)
 
